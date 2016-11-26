@@ -18,7 +18,7 @@ defmodule Simple.NumberTest do
   describe "Inspect protocol" do
     test "numbers printing" do
       num = Number.new(64)
-      assert inspect(num) == "<<64>>"
+      assert inspect(num) == "64"
     end
   end
 end

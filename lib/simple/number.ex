@@ -31,6 +31,6 @@ end
 defimpl Inspect, for: Simple.Number do
 
   def inspect(%{value: value}, _opts) do
-    "<<#{value}>>"
+    to_string(value)
   end
 end

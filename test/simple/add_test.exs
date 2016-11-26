@@ -49,7 +49,7 @@ defmodule Simple.AddTest do
   describe "Inspect protocol" do
     test "Add printing" do
       num = Add.new(Number.new(13), Number.new(0))
-      assert inspect(num) == "<<13>> + <<0>>"
+      assert inspect(num) == "13 + 0"
     end
   end
 end

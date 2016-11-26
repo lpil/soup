@@ -18,7 +18,7 @@ defmodule Simple.FalseTest do
   describe "Inspect protocol" do
     test "Add printing" do
       num = False.new()
-      assert inspect(num) == "<<false>>"
+      assert inspect(num) == "false"
     end
   end
 end

@@ -18,7 +18,7 @@ defmodule Simple.TrueTest do
   describe "Inspect protocol" do
     test "Add printing" do
       num = True.new()
-      assert inspect(num) == "<<true>>"
+      assert inspect(num) == "true"
     end
   end
 end

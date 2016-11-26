@@ -25,6 +25,6 @@ end
 defimpl Inspect, for: Simple.False do
 
   def inspect(%{}, _opts) do
-    "<<false>>"
+    "false"
   end
 end
