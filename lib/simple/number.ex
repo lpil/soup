@@ -23,7 +23,7 @@ end
 
 defimpl Simple.Expression, for: Simple.Number do
 
-  def reduce(_) do
+  def reduce(_, _) do
     :noop
   end
 end

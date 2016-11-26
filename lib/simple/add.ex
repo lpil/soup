@@ -25,11 +25,11 @@ end
 
 defimpl Simple.Expression, for: Simple.Add do
 
-  def reduce(%{lhs: lhs, rhs: rhs}) do
+  def reduce(%{lhs: lhs, rhs: rhs}, env) do
     alias Simple.{Add,Number,Expression}
     res =
-      with {:lhs, :noop} <- {:lhs, Expression.reduce(lhs)},
-           {:rhs, :noop} <- {:rhs, Expression.reduce(rhs)} do
+      with {:lhs, :noop} <- {:lhs, Expression.reduce(lhs, env)},
+           {:rhs, :noop} <- {:rhs, Expression.reduce(rhs, env)} do
         Number.new(lhs.value + rhs.value)
       else
         {:lhs, {:ok, lhs}} -> Add.new(lhs, rhs)

@@ -4,11 +4,14 @@ defmodule Simple.NumberTest do
 
   alias Simple.Number
   alias Simple.Expression
+  alias Simple.Environment
+
+  @env Environment.new()
 
   describe "Simple.Reduce protocol" do
     test "numbers are not reducible" do
       num = Number.new(64)
-      assert Expression.reduce(num) == :noop
+      assert Expression.reduce(num, @env) == :noop
     end
   end
 
