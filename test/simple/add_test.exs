@@ -2,10 +2,7 @@ defmodule Simple.AddTest do
   use ExUnit.Case
   doctest Simple.Add
 
-  alias Simple.Add
-  alias Simple.Number
-  alias Simple.Expression
-  alias Simple.Environment
+  alias Simple.{Add, Number, Expression, Environment}
 
   @env Environment.new()
 
