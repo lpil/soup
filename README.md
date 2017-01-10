@@ -1,24 +1,13 @@
-# Simple
+# Simple.ex
 
-**TODO: Add description**
+Simple is a rather rubbish interpreted language, created as I read through the
+first few chapters of Tom Stuart's excellent [Understanding Computation][book].
+Go grab a copy.
 
-## Installation
+[book]: http://computationbook.com/
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+The version here differs from the one in the book in that it has slightly
+different semantics, and it's written in Elixir and Erlang rather than Ruby.
 
-  1. Add `simple` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:simple, "~> 0.1.0"}]
-    end
-    ```
-
-  2. Ensure `simple` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:simple]]
-    end
-    ```
-
+### MPL2 Licence
