@@ -6,7 +6,7 @@ defmodule Simple.Add do
   alias Simple.Expression
 
   keys = [:lhs, :rhs]
-  @enforced_keys keys
+  @enforce_keys keys
   defstruct keys
 
   @type t :: %__MODULE__{lhs: Expression.t, rhs: Expression.t}

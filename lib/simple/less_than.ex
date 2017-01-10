@@ -1,6 +1,6 @@
 defmodule Simple.LessThan do
   keys = [:lhs, :rhs]
-  @enforced_keys keys
+  @enforce_keys keys
   defstruct keys
 
   alias Simple.{Expression, True}
@@ -33,6 +33,7 @@ defimpl Simple.Expression, for: Simple.LessThan do
   end
 
   defp compare(lhs, rhs) do
+    alias Simple.{True, False}
     if lhs < rhs do
       True.new()
     else
