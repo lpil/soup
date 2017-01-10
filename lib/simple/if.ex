@@ -1,6 +1,6 @@
 defmodule Simple.If do
   keys = [:condition, :consequence, :alternative]
-  @enforced_keys keys
+  @enforce_keys keys
   defstruct keys
 
   alias Simple.Expression

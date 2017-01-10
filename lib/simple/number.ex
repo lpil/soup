@@ -4,7 +4,7 @@ defmodule Simple.Number do
   """
 
   keys = [:value]
-  @enforced_keys keys
+  @enforce_keys keys
   defstruct keys
 
   @type t :: %__MODULE__{value: number}
