@@ -21,4 +21,14 @@ defmodule Simple.Source do
           {:error, line, error}
       end
   end
+
+  def parse(source) when is_binary(source) do
+    case tokenize(source) do
+      {:ok, tokens} ->
+        :simple_parser.parse(tokens)
+
+      {:error, _, _} = error ->
+        error
+    end
+  end
 end
