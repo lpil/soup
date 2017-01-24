@@ -25,7 +25,7 @@ defimpl Simple.AST.Protocol, for: Simple.AST.If do
   def to_source(x, _opts) do
     import Simple.AST, only: [to_source: 1]
     """
-    if #{to_source x.condition} {
+    if (#{to_source x.condition}) {
       #{to_source x.consequence}
     } else {
       #{to_source x.alternative}

@@ -8,9 +8,11 @@ Atom   = [a-z_][a-zA-Z0-9!\?_]*
 Rules.
 
 if      : {token, {'if',   TokenLine}}.
+let     : {token, {'let',  TokenLine}}.
 else    : {token, {'else', TokenLine}}.
 true    : {token, {true,   TokenLine}}.
 false   : {token, {false,  TokenLine}}.
+\=      : {token, {'=',    TokenLine}}.
 \+      : {token, {'+',    TokenLine}}.
 \-      : {token, {'-',    TokenLine}}.
 \<      : {token, {'<',    TokenLine}}.

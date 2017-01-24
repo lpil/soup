@@ -7,7 +7,7 @@ defmodule Simple.IfTest do
 
   @env Env.new()
 
-  describe "Simple.Reduce protocol" do
+  describe "AST.reduce/2" do
     test "return consequence if condition is true" do
       expr = If.new(True.new(), Number.new(1), Number.new(2))
       assert {:ok, res, @env} = AST.reduce(expr, @env)
@@ -38,7 +38,7 @@ defmodule Simple.IfTest do
     test "If printing" do
       num = If.new(True.new(), Number.new(1), Number.new(2))
       assert AST.to_source(num) == """
-      if true {
+      if (true) {
         1
       } else {
         2

@@ -52,12 +52,20 @@ defmodule Simple.SourceTest do
       assert [{:<, _}] = tokenize!("<")
     end
 
+    test "= tokenization" do
+      assert [{:=, _}] = tokenize!("=")
+    end
+
     test "if else tokenization" do
       assert [{:if, _}, {:"(", _}, {:true, _}, {:")", _},
               {:"{", _}, {:number, _, 1}, {:"}", _},
               {:else, _},
               {:"{", _}, {:number, _, 2}, {:"}", _},
             ] = tokenize!("if (true) { 1 } else { 2 }")
+    end
+
+    test "let tokenization" do
+      assert [{:let, _}] = tokenize!("let")
     end
   end
 
@@ -98,5 +106,10 @@ defmodule Simple.SourceTest do
       assert parse!("if (true) { 1 } else { 2 }") ==
           [If.new(True.new, Number.new(1), Number.new(2))]
     end
+
+    # TODO
+    # test "assignment" do
+    #   assert parse!("let x = 10") == [Add.new(Number.new(1), Number.new(2))]
+    # end
   end
 end
