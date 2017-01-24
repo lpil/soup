@@ -1,18 +1,18 @@
-defmodule Simple.If do
+defmodule Simple.AST.If do
   keys = [:condition, :consequence, :alternative]
   @enforce_keys keys
   defstruct keys
 
-  alias Simple.Expression
+  alias Simple.AST
 
-  @type t :: %__MODULE__{condition: Expression.t,
-                         consequence: Expression.t,
-                         alternative: Expression.t}
+  @type t :: %__MODULE__{condition: AST.t,
+                         consequence: AST.t,
+                         alternative: AST.t}
 
   @doc """
   Construct an if flow control node.
   """
-  @spec new(Expression.t, Expression.t, Expression.t) :: t
+  @spec new(AST.t, AST.t, AST.t) :: t
   def new(condition, consequence, alternative) do
     %__MODULE__{condition: condition,
                 consequence: consequence,
@@ -20,10 +20,10 @@ defmodule Simple.If do
   end
 end
 
-defimpl Simple.Expression.Protocol, for: Simple.If do
+defimpl Simple.AST.Protocol, for: Simple.AST.If do
 
   def to_source(x, _opts) do
-    import Simple.Expression, only: [to_source: 1]
+    import Simple.AST, only: [to_source: 1]
     """
     if #{to_source x.condition} {
       #{to_source x.consequence}
@@ -33,15 +33,15 @@ defimpl Simple.Expression.Protocol, for: Simple.If do
     """
   end
 
-  def reduce(%{condition: %Simple.False{}} = x, _) do
+  def reduce(%{condition: %Simple.AST.False{}} = x, _) do
     {:ok, x.alternative}
   end
   def reduce(x, env) do
-    case Simple.Expression.reduce(x.condition, env) do
+    case Simple.AST.reduce(x.condition, env) do
       :noop ->
         {:ok, x.consequence}
       {:ok, condition} ->
-        {:ok, Simple.If.new(condition, x.consequence, x.alternative)}
+        {:ok, Simple.AST.If.new(condition, x.consequence, x.alternative)}
     end
   end
 end

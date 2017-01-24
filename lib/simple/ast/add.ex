@@ -1,15 +1,15 @@
-defmodule Simple.Add do
+defmodule Simple.AST.Add do
   @moduledoc """
   Number addition.
   """
 
-  alias Simple.Expression
+  alias Simple.AST
 
   keys = [:lhs, :rhs]
   @enforce_keys keys
   defstruct keys
 
-  @type t :: %__MODULE__{lhs: Expression.t, rhs: Expression.t}
+  @type t :: %__MODULE__{lhs: AST.t, rhs: AST.t}
 
   @doc """
   Construct an Add node.
@@ -23,18 +23,19 @@ defmodule Simple.Add do
   end
 end
 
-defimpl Simple.Expression.Protocol, for: Simple.Add do
+defimpl Simple.AST.Protocol, for: Simple.AST.Add do
 
   def to_source(%{lhs: lhs, rhs: rhs}, _opts) do
-    import Simple.Expression, only: [to_source: 1]
+    import Simple.AST, only: [to_source: 1]
     "#{to_source lhs} + #{to_source rhs}"
   end
 
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
-    alias Simple.{Add,Number,Expression}
+    alias Simple.AST
+    alias Simple.AST.{Add, Number}
     res =
-      with {:lhs, :noop} <- {:lhs, Expression.reduce(lhs, env)},
-           {:rhs, :noop} <- {:rhs, Expression.reduce(rhs, env)} do
+      with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
+           {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
         Number.new(lhs.value + rhs.value)
       else
         {:lhs, {:ok, lhs}} -> Add.new(lhs, rhs)

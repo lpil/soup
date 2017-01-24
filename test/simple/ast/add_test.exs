@@ -1,15 +1,16 @@
 defmodule Simple.AddTest do
   use ExUnit.Case
-  doctest Simple.Add
+  doctest Simple.AST.Add
 
-  alias Simple.{Add, Number, Expression, Environment}
+  alias Simple.{AST, Env}
+  alias Simple.AST.{Add, Number}
 
-  @env Environment.new()
+  @env Env.new()
 
-  describe "Expression.reduce/2" do
+  describe "AST.reduce/2" do
     test "reduction of add of numbers" do
       expr = Add.new(Number.new(1), Number.new(2))
-      assert {:ok, expr} = Expression.reduce(expr, @env)
+      assert {:ok, expr} = AST.reduce(expr, @env)
       assert expr == Number.new(3)
     end
 
@@ -18,10 +19,10 @@ defmodule Simple.AddTest do
         Add.new(Number.new(1), Number.new(2)),
         Number.new(3))
 
-      assert {:ok, expr} = Expression.reduce(expr, @env)
+      assert {:ok, expr} = AST.reduce(expr, @env)
       assert expr == Add.new(Number.new(3), Number.new(3))
 
-      assert {:ok, expr} = Expression.reduce(expr, @env)
+      assert {:ok, expr} = AST.reduce(expr, @env)
       assert expr == Number.new(6)
     end
 
@@ -30,23 +31,23 @@ defmodule Simple.AddTest do
         Add.new(Number.new(1), Number.new(2)),
         Add.new(Number.new(3), Number.new(4)))
 
-      assert {:ok, expr} = Expression.reduce(expr, @env)
+      assert {:ok, expr} = AST.reduce(expr, @env)
       assert expr == Add.new(
         Number.new(3),
         Add.new(Number.new(3), Number.new(4)))
 
-      assert {:ok, expr} = Expression.reduce(expr, @env)
+      assert {:ok, expr} = AST.reduce(expr, @env)
       assert expr == Add.new(Number.new(3), Number.new(7))
 
-      assert {:ok, expr} = Expression.reduce(expr, @env)
+      assert {:ok, expr} = AST.reduce(expr, @env)
       assert expr == Number.new(10)
     end
   end
 
-  describe "Expression.to_source/2" do
+  describe "AST.to_source/2" do
     test "Add printing" do
       num = Add.new(Number.new(13), Number.new(0))
-      assert Expression.to_source(num) == "13 + 0"
+      assert AST.to_source(num) == "13 + 0"
     end
   end
 end

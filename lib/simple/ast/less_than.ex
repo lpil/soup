@@ -1,34 +1,36 @@
-defmodule Simple.LessThan do
+defmodule Simple.AST.LessThan do
   keys = [:lhs, :rhs]
   @enforce_keys keys
   defstruct keys
 
-  alias Simple.{Expression, True}
+  alias Simple.AST
+  alias Simple.AST.True
 
-  @type t :: %__MODULE__{lhs: Expression.t,
-                         rhs: Expression.t}
+  @type t :: %__MODULE__{lhs: AST.t,
+                         rhs: AST.t}
 
   @doc """
   Construct an size comparison node.
   """
-  @spec new(Expression.t, Expression.t) :: t
+  @spec new(AST.t, AST.t) :: t
   def new(lhs, rhs) do
     %__MODULE__{lhs: lhs, rhs: rhs}
   end
 end
 
-defimpl Simple.Expression.Protocol, for: Simple.LessThan do
+defimpl Simple.AST.Protocol, for: Simple.AST.LessThan do
 
   def to_source(x, _opts) do
-    import Simple.Expression, only: [to_source: 1]
+    import Simple.AST, only: [to_source: 1]
     "#{to_source x.lhs} < #{to_source x.rhs}"
   end
 
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
-    alias Simple.{LessThan, Expression, True, False}
+    alias Simple.AST
+    alias Simple.AST.{LessThan, True, False}
     res =
-      with {:lhs, :noop} <- {:lhs, Expression.reduce(lhs, env)},
-           {:rhs, :noop} <- {:rhs, Expression.reduce(rhs, env)} do
+      with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
+           {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
         compare(lhs, rhs)
       else
         {:lhs, {:ok, lhs}} -> LessThan.new(lhs, rhs)
@@ -38,7 +40,7 @@ defimpl Simple.Expression.Protocol, for: Simple.LessThan do
   end
 
   defp compare(lhs, rhs) do
-    alias Simple.{True, False}
+    alias Simple.AST.{True, False}
     if lhs < rhs do
       True.new()
     else

@@ -1,6 +1,5 @@
 defmodule SimpleTest do
   use ExUnit.Case
-  doctest Simple
 
   test "the truth" do
     assert 1 + 1 == 2

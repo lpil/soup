@@ -30,19 +30,19 @@ literal -> false  : mk_false('$1').
 Erlang code.
 
 mk_number({number, _Line, Number}) ->
-  'Elixir.Simple.Number':new(Number).
+  'Elixir.Simple.AST.Number':new(Number).
 
 mk_true({true, _Line}) ->
-  'Elixir.Simple.True':new().
+  'Elixir.Simple.AST.True':new().
 
 mk_false({false, _Line}) ->
-  'Elixir.Simple.False':new().
+  'Elixir.Simple.AST.False':new().
 
 mk_add(X, Y) ->
-  'Elixir.Simple.Add':new(X, Y).
+  'Elixir.Simple.AST.Add':new(X, Y).
 
 mk_less_than(X, Y) ->
-  'Elixir.Simple.LessThan':new(X, Y).
+  'Elixir.Simple.AST.LessThan':new(X, Y).
 
 mk_if(Pred, X, Y) ->
-  'Elixir.Simple.If':new(Pred, X, Y).
+  'Elixir.Simple.AST.If':new(Pred, X, Y).
