@@ -3,8 +3,16 @@ defmodule Simple.AST do
 
   alias Simple.Env
 
-  @spec reduce(t, Env.t) :: {:ok, t} | :noop
-  defdelegate reduce(expr, env), to: Simple.AST.Protocol
+  @spec reduce(t, Env.t) :: {:ok, t, Env.t} | :noop
+  def reduce(ast, env) do
+    case Simple.AST.Protocol.reduce(ast, env) do
+      {:ok, _, %Env{}} = result ->
+        result
+
+      :noop ->
+        :noop
+    end
+  end
 
 
   @spec to_source(t, any) :: String.t
@@ -16,7 +24,7 @@ end
 defprotocol Simple.AST.Protocol do
   alias Simple.{AST, Env}
 
-  @spec reduce(AST.t, Env.t) :: {:ok, t} | :noop
+  @spec reduce(AST.t, Env.t) :: {:ok, AST.t, Env.t} | :noop
   def reduce(data, env)
 
   @spec to_source(AST.t, any) :: String.t

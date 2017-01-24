@@ -10,7 +10,7 @@ defmodule Simple.AddTest do
   describe "AST.reduce/2" do
     test "reduction of add of numbers" do
       expr = Add.new(Number.new(1), Number.new(2))
-      assert {:ok, expr} = AST.reduce(expr, @env)
+      assert {:ok, expr, @env} = AST.reduce(expr, @env)
       assert expr == Number.new(3)
     end
 
@@ -19,10 +19,10 @@ defmodule Simple.AddTest do
         Add.new(Number.new(1), Number.new(2)),
         Number.new(3))
 
-      assert {:ok, expr} = AST.reduce(expr, @env)
+      assert {:ok, expr, @env} = AST.reduce(expr, @env)
       assert expr == Add.new(Number.new(3), Number.new(3))
 
-      assert {:ok, expr} = AST.reduce(expr, @env)
+      assert {:ok, expr, @env} = AST.reduce(expr, @env)
       assert expr == Number.new(6)
     end
 
@@ -31,15 +31,15 @@ defmodule Simple.AddTest do
         Add.new(Number.new(1), Number.new(2)),
         Add.new(Number.new(3), Number.new(4)))
 
-      assert {:ok, expr} = AST.reduce(expr, @env)
+      assert {:ok, expr, @env} = AST.reduce(expr, @env)
       assert expr == Add.new(
         Number.new(3),
         Add.new(Number.new(3), Number.new(4)))
 
-      assert {:ok, expr} = AST.reduce(expr, @env)
+      assert {:ok, expr, @env} = AST.reduce(expr, @env)
       assert expr == Add.new(Number.new(3), Number.new(7))
 
-      assert {:ok, expr} = AST.reduce(expr, @env)
+      assert {:ok, expr, @env} = AST.reduce(expr, @env)
       assert expr == Number.new(10)
     end
   end

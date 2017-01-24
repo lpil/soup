@@ -33,15 +33,16 @@ defimpl Simple.AST.Protocol, for: Simple.AST.If do
     """
   end
 
-  def reduce(%{condition: %Simple.AST.False{}} = x, _) do
-    {:ok, x.alternative}
+  def reduce(%{condition: %Simple.AST.False{}} = x, env) do
+    {:ok, x.alternative, env}
   end
   def reduce(x, env) do
     case Simple.AST.reduce(x.condition, env) do
       :noop ->
-        {:ok, x.consequence}
-      {:ok, condition} ->
-        {:ok, Simple.AST.If.new(condition, x.consequence, x.alternative)}
+        {:ok, x.consequence, env}
+      {:ok, condition, new_env} ->
+        new_if = Simple.AST.If.new(condition, x.consequence, x.alternative)
+        {:ok, new_if, new_env}
     end
   end
 end

@@ -28,15 +28,13 @@ defimpl Simple.AST.Protocol, for: Simple.AST.LessThan do
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
     alias Simple.AST
     alias Simple.AST.{LessThan, True, False}
-    res =
-      with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
-           {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
-        compare(lhs, rhs)
-      else
-        {:lhs, {:ok, lhs}} -> LessThan.new(lhs, rhs)
-        {:rhs, {:ok, rhs}} -> LessThan.new(lhs, rhs)
-      end
-    {:ok, res}
+    with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
+          {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
+      {:ok, compare(lhs, rhs), env}
+    else
+      {:lhs, {:ok, new_lhs, new_env}} -> {:ok, LessThan.new(new_lhs, rhs), new_env}
+      {:rhs, {:ok, new_rhs, new_env}} -> {:ok, LessThan.new(lhs, new_rhs), new_env}
+    end
   end
 
   defp compare(lhs, rhs) do
