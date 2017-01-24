@@ -3,7 +3,7 @@ defmodule Simple.SourceTest do
   doctest Simple.Source
 
   alias Simple.Source
-  alias Simple.AST.{Number, True, False, Add, LessThan, If}
+  alias Simple.AST.{Number, True, False, Add, LessThan, If, Let}
   import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do
@@ -107,9 +107,8 @@ defmodule Simple.SourceTest do
           [If.new(True.new, Number.new(1), Number.new(2))]
     end
 
-    # TODO
-    # test "assignment" do
-    #   assert parse!("let x = 10") == [Add.new(Number.new(1), Number.new(2))]
-    # end
+    test "assignment" do
+      assert parse!("let x = 10") == [Let.new(:x, Number.new(10))]
+    end
   end
 end

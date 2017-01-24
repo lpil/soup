@@ -6,6 +6,8 @@ Terminals
 '{' '}' '(' ')'
 number
 true false
+atom
+let '='
 if else.
 
 Rootsymbol expressions.
@@ -19,6 +21,7 @@ expressions -> expression expressions : ['$1'|'$2'].
 expression -> literal                   : '$1'.
 expression -> expression '+' expression : mk_add('$1', '$3').
 expression -> expression '<' expression : mk_less_than('$1', '$3').
+expression -> let atom '=' expression   : mk_let('$2', '$4').
 expression -> if '(' expression ')'
               '{' expression '}'
               else '{' expression '}'   : mk_if('$3', '$6', '$10').
@@ -46,3 +49,6 @@ mk_less_than(X, Y) ->
 
 mk_if(Pred, X, Y) ->
   'Elixir.Simple.AST.If':new(Pred, X, Y).
+
+mk_let({atom, _, Name}, Value) ->
+  'Elixir.Simple.AST.Let':new(Name, Value).
