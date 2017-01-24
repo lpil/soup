@@ -20,7 +20,18 @@ defmodule Simple.If do
   end
 end
 
-defimpl Simple.Expression, for: Simple.If do
+defimpl Simple.Expression.Protocol, for: Simple.If do
+
+  def to_source(x, _opts) do
+    import Simple.Expression, only: [to_source: 1]
+    """
+    if #{to_source x.condition} {
+      #{to_source x.consequence}
+    } else {
+      #{to_source x.alternative}
+    }
+    """
+  end
 
   def reduce(%{condition: %Simple.False{}} = x, _) do
     {:ok, x.alternative}
@@ -32,12 +43,5 @@ defimpl Simple.Expression, for: Simple.If do
       {:ok, condition} ->
         {:ok, Simple.If.new(condition, x.consequence, x.alternative)}
     end
-  end
-end
-
-defimpl Inspect, for: Simple.If do
-
-  def inspect(x, _opts) do
-    "if #{inspect x.condition} { #{inspect x.consequence} } else { #{inspect x.alternative} }"
   end
 end

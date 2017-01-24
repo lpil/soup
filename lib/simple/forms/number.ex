@@ -21,16 +21,13 @@ defmodule Simple.Number do
   end
 end
 
-defimpl Simple.Expression, for: Simple.Number do
+defimpl Simple.Expression.Protocol, for: Simple.Number do
 
   def reduce(_, _) do
     :noop
   end
-end
 
-defimpl Inspect, for: Simple.Number do
-
-  def inspect(%{value: value}, _opts) do
+  def to_source(%{value: value}, _opts) do
     to_string(value)
   end
 end

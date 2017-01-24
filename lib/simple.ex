@@ -12,11 +12,29 @@ defmodule Simple.Environment do
   end
 end
 
-defprotocol Simple.Expression do
-  alias Simple.Environment
 
+defprotocol Simple.Expression.Protocol do
+  alias Simple.{Expression, Environment}
+
+  @spec reduce(Expression.t, Environment.t) :: {:ok, t} | :noop
+  def reduce(data, env)
+
+  @spec to_source(Expression.t, any) :: String.t
+  def to_source(expr, opts)
+end
+
+
+defmodule Simple.Expression do
   @type t :: any
 
+  alias Simple.Environment
+
   @spec reduce(t, Environment.t) :: {:ok, t} | :noop
-  def reduce(data, env)
+  defdelegate reduce(expr, env), to: Simple.Expression.Protocol
+
+
+  @spec to_source(t, any) :: String.t
+  def to_source(expr, opts \\ %{}) do
+    Simple.Expression.Protocol.to_source(expr, opts)
+  end
 end

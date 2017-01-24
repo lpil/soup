@@ -8,17 +8,17 @@ defmodule Simple.FalseTest do
 
   @env Environment.new()
 
-  describe "Simple.Reduce protocol" do
+  describe "Expression.reduce/2" do
     test "reduction of add of numbers" do
       expr = False.new()
       assert Expression.reduce(expr, @env) == :noop
     end
   end
 
-  describe "Inspect protocol" do
+  describe "Expression.to_source/2" do
     test "Add printing" do
       num = False.new()
-      assert inspect(num) == "false"
+      assert Expression.to_source(num) == "false"
     end
   end
 end

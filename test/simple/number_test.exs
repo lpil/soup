@@ -8,17 +8,17 @@ defmodule Simple.NumberTest do
 
   @env Environment.new()
 
-  describe "Simple.Reduce protocol" do
+  describe "Expression.reduce/1" do
     test "numbers are not reducible" do
       num = Number.new(64)
       assert Expression.reduce(num, @env) == :noop
     end
   end
 
-  describe "Inspect protocol" do
+  describe "Expression.to_source/1" do
     test "numbers printing" do
       num = Number.new(64)
-      assert inspect(num) == "64"
+      assert Expression.to_source(num) == "64"
     end
   end
 end

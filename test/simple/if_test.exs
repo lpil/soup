@@ -33,10 +33,16 @@ defmodule Simple.IfTest do
     end
   end
 
-  describe "Inspect protocol" do
+  describe "Expression.to_source" do
     test "If printing" do
       num = If.new(True.new(), Number.new(1), Number.new(2))
-      assert inspect(num) == "if true { 1 } else { 2 }"
+      assert Expression.to_source(num) == """
+      if true {
+        1
+      } else {
+        2
+      }
+      """
     end
   end
 end

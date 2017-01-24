@@ -15,16 +15,13 @@ defmodule Simple.True do
   end
 end
 
-defimpl Simple.Expression, for: Simple.True do
+defimpl Simple.Expression.Protocol, for: Simple.True do
 
   def reduce(_, _) do
     :noop
   end
-end
 
-defimpl Inspect, for: Simple.True do
-
-  def inspect(%{}, _opts) do
+  def to_source(%{}, _opts) do
     "true"
   end
 end

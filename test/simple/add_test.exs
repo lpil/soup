@@ -6,7 +6,7 @@ defmodule Simple.AddTest do
 
   @env Environment.new()
 
-  describe "Simple.Reduce protocol" do
+  describe "Expression.reduce/2" do
     test "reduction of add of numbers" do
       expr = Add.new(Number.new(1), Number.new(2))
       assert {:ok, expr} = Expression.reduce(expr, @env)
@@ -43,10 +43,10 @@ defmodule Simple.AddTest do
     end
   end
 
-  describe "Inspect protocol" do
+  describe "Expression.to_source/2" do
     test "Add printing" do
       num = Add.new(Number.new(13), Number.new(0))
-      assert inspect(num) == "13 + 0"
+      assert Expression.to_source(num) == "13 + 0"
     end
   end
 end

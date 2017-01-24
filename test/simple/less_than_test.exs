@@ -6,7 +6,7 @@ defmodule Simple.LessThanTest do
 
   @env Environment.new()
 
-  describe "Simple.Reduce protocol" do
+  describe "Simple.Expression.reduce" do
     test "numbers can be less than" do
       expr = LessThan.new(Number.new(1), Number.new(2))
       assert {:ok, res} = Expression.reduce(expr, @env)
@@ -39,10 +39,10 @@ defmodule Simple.LessThanTest do
   end
 
 
-  describe "Inspect protocol" do
+  describe "Simple.Expression.to_source" do
     test "If printing" do
       expr = LessThan.new(Number.new(1), Number.new(2))
-      assert inspect(expr) == "1 < 2"
+      assert Expression.to_source(expr) == "1 < 2"
     end
   end
 end

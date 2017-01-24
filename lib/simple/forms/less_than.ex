@@ -17,7 +17,12 @@ defmodule Simple.LessThan do
   end
 end
 
-defimpl Simple.Expression, for: Simple.LessThan do
+defimpl Simple.Expression.Protocol, for: Simple.LessThan do
+
+  def to_source(x, _opts) do
+    import Simple.Expression, only: [to_source: 1]
+    "#{to_source x.lhs} < #{to_source x.rhs}"
+  end
 
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
     alias Simple.{LessThan, Expression, True, False}
@@ -39,12 +44,5 @@ defimpl Simple.Expression, for: Simple.LessThan do
     else
       False.new()
     end
-  end
-end
-
-defimpl Inspect, for: Simple.LessThan do
-
-  def inspect(x, _opts) do
-    "#{inspect x.lhs} < #{inspect x.rhs}"
   end
 end

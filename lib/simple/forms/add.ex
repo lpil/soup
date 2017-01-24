@@ -23,7 +23,12 @@ defmodule Simple.Add do
   end
 end
 
-defimpl Simple.Expression, for: Simple.Add do
+defimpl Simple.Expression.Protocol, for: Simple.Add do
+
+  def to_source(%{lhs: lhs, rhs: rhs}, _opts) do
+    import Simple.Expression, only: [to_source: 1]
+    "#{to_source lhs} + #{to_source rhs}"
+  end
 
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
     alias Simple.{Add,Number,Expression}
@@ -36,12 +41,5 @@ defimpl Simple.Expression, for: Simple.Add do
         {:rhs, {:ok, rhs}} -> Add.new(lhs, rhs)
       end
     {:ok, res}
-  end
-end
-
-defimpl Inspect, for: Simple.Add do
-
-  def inspect(%{lhs: lhs, rhs: rhs}, _opts) do
-    "#{inspect lhs} + #{inspect rhs}"
   end
 end
