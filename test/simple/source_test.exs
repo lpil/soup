@@ -2,17 +2,9 @@ defmodule Simple.SourceTest do
   use ExUnit.Case, async: true
   doctest Simple.Source
 
+  alias Simple.Source
   alias Simple.AST.{Number, True, False, Add, LessThan, If}
-
-  defp tokenize!(source) do
-    {:ok, source} = Simple.Source.tokenize(source)
-    source
-  end
-
-  defp parse!(source) do
-    {:ok, ast} = Simple.Source.parse(source)
-    ast
-  end
+  import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do
     test "number tokenization" do

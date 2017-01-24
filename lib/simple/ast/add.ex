@@ -34,12 +34,15 @@ defimpl Simple.AST.Protocol, for: Simple.AST.Add do
     alias Simple.AST
     alias Simple.AST.{Add, Number}
     with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
-          {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
+         {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
       new_num = Number.new(lhs.value + rhs.value)
       {:ok, new_num, env}
     else
-      {:lhs, {:ok, new_lhs, new_env}} -> {:ok, Add.new(new_lhs, rhs), new_env}
-      {:rhs, {:ok, new_rhs, new_env}} -> {:ok, Add.new(lhs, new_rhs), new_env}
+      {:lhs, {:ok, new_lhs, new_env}} ->
+        {:ok, Add.new(new_lhs, rhs), new_env}
+
+      {:rhs, {:ok, new_rhs, new_env}} ->
+        {:ok, Add.new(lhs, new_rhs), new_env}
     end
   end
 end

@@ -14,12 +14,12 @@ defmodule Simple.AST do
     end
   end
 
-
   @spec to_source(t, any) :: String.t
   def to_source(expr, opts \\ %{}) do
     Simple.AST.Protocol.to_source(expr, opts)
   end
 end
+
 
 defprotocol Simple.AST.Protocol do
   alias Simple.{AST, Env}
