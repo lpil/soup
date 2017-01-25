@@ -19,3 +19,4 @@ erl_crash.dump
 # Generated Erlang modules
 src/simple_tokenizer.erl
 src/simple_parser.erl
+/simple

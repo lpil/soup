@@ -9,5 +9,14 @@ Go grab a copy.
 
 [book]: http://computationbook.com/
 
+## Usage
+
+```sh
+# Compile the interpreter
+mix escript.build
+
+# Run some Simple code!
+./simple priv/addition.smp
+```
 
 ### MPL2 Licence

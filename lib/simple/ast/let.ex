@@ -1,6 +1,6 @@
 defmodule Simple.AST.Let do
   @moduledoc """
-  Variable assignment.
+  Value assignment.
   """
 
   keys = [:name, :value]
@@ -10,7 +10,7 @@ defmodule Simple.AST.Let do
   @type t :: %__MODULE__{name: atom, value: AST.t}
 
   @doc """
-  Construct a Number node.
+  Construct a Let node.
 
       iex> Simple.AST.Let.new(:x, Simple.AST.Number.new(64))
       %Simple.AST.Let{name: :x, value: Simple.AST.Number.new(64)}
