@@ -16,7 +16,7 @@ defmodule Soup.Mixfile do
   end
 
   defp deps do
-    [{:mix_test_watch, "~> 0.2", only: [:dev, :test]},
+    [{:mix_test_watch, github: "lpil/mix-test.watch", only: [:dev, :test]},
      {:dialyxir, "~> 0.4", only: [:dev]}]
   end
 end

@@ -1,0 +1,7 @@
+let z = if (1 < 2) {
+  100
+} else {
+  200
+}
+
+// vim: set ft=rust:
