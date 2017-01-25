@@ -1,9 +1,10 @@
 Definitions.
 
-Int    = [0-9]+
-Float  = [0-9]+\.[0-9]+
-WS     = [\n\s\r\t]
-Atom   = [a-z_][a-zA-Z0-9!\?_]*
+Int   = [0-9]+
+Float = [0-9]+\.[0-9]+
+WS    = [\n\s\r\t]
+Atom  = [a-z_][a-zA-Z0-9!\?_]*
+Cmt   = \/\/[^\n]*
 
 Rules.
 
@@ -23,6 +24,7 @@ false   : {token, {false,  TokenLine}}.
 {Int}   : {token, {number, TokenLine, int(TokenChars)}}.
 {Float} : {token, {number, TokenLine, flt(TokenChars)}}.
 {Atom}  : {token, {atom,   TokenLine, list_to_atom(TokenChars)}}.
+{Cmt}   : skip_token.
 {WS}    : skip_token.
 
 

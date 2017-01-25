@@ -67,6 +67,11 @@ defmodule Simple.SourceTest do
     test "let tokenization" do
       assert [{:let, _}] = tokenize!("let")
     end
+
+    test "comment tokenization" do
+      assert [{:let, _}] = tokenize!("let // 1 2 3")
+      assert [{:let, _}] = tokenize!("let//")
+    end
   end
 
 

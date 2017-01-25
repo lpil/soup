@@ -16,7 +16,7 @@ Go grab a copy.
 mix escript.build
 
 # Run some Simple code!
-./simple priv/addition.smp
+./simple examples/addition.smp
 ```
 
 ### MPL2 Licence
