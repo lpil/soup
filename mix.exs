@@ -1,13 +1,13 @@
-defmodule Simple.Mixfile do
+defmodule Soup.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :simple,
+    [app: :soup,
      version: "0.1.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     escript: [main_module: Simple.CLI],
+     escript: [main_module: Soup.CLI],
      deps: deps()]
   end
 

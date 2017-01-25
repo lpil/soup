@@ -15,9 +15,10 @@ defmodule Soup.AST.BlockTest do
     end
 
     test "the first expression is reduced if reducible" do
-      block = Block.new([Add.new(Number.new(1), Number.new(2))])
+      block = Block.new([Add.new(Number.new(1), Number.new(2)),
+                         Number.new(4)])
       assert {:ok, next, @env} = AST.reduce(block, @env)
-      assert next == Block.new([Number.new(3)])
+      assert next == Block.new([Number.new(3), Number.new(4)])
     end
 
     test "reduces to last expression if it is not reducible" do

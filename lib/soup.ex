@@ -12,7 +12,6 @@ defmodule Soup do
     {:ok, machine} =
       source
       |> Source.parse!()
-      |> hd               # TODO: Support blocks
       |> Machine.new()
       |> Machine.run
     machine.ast

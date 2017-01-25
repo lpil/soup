@@ -118,5 +118,15 @@ defmodule Soup.SourceTest do
     test "assignment" do
       assert parse!("let x = 10") == Block.new([Let.new(:x, Number.new(10))])
     end
+
+    test "block parsing" do
+      assert parse!("""
+      let a = 10
+      let b = 20
+      let c = 30
+      """) == Block.new([Let.new(:a, Number.new(10)),
+                         Let.new(:b, Number.new(20)),
+                         Let.new(:c, Number.new(30))])
+    end
   end
 end
