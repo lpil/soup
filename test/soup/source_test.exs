@@ -3,7 +3,7 @@ defmodule Soup.SourceTest do
   doctest Soup.Source
 
   alias Soup.Source
-  alias Soup.AST.{Number, True, False, Add, LessThan, If, Let}
+  alias Soup.AST.{Block, Number, True, False, Add, LessThan, If, Let}
   import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do
@@ -77,22 +77,24 @@ defmodule Soup.SourceTest do
 
   describe "parse/1" do
     test "number parsing" do
-      assert parse!("1") == [Number.new(1)]
-      assert parse!("007") == [Number.new(7)]
-      assert parse!("38.44") == [Number.new(38.44)]
+      assert parse!("1") == Block.new([Number.new(1)])
+      assert parse!("007") == Block.new([Number.new(7)])
+      assert parse!("38.44") == Block.new([Number.new(38.44)])
     end
 
     test "`true` parsing" do
-      assert parse!("true") == [True.new()]
+      assert parse!("true") == Block.new([True.new()])
     end
 
     test "`false` parsing" do
-      assert parse!("false") == [False.new()]
+      assert parse!("false") == Block.new([False.new()])
     end
 
     test "+ parsing" do
-      assert parse!("1 + 2") == [Add.new(Number.new(1), Number.new(2))]
-      assert parse!("false + 6") == [Add.new(False.new(), Number.new(6))]
+      assert parse!("1 + 2") == Block.new([Add.new(Number.new(1),
+                                                   Number.new(2))])
+      assert parse!("false + 6") == Block.new([Add.new(False.new(),
+                                                       Number.new(6))])
     end
 
     # TODO
@@ -101,19 +103,20 @@ defmodule Soup.SourceTest do
     # end
 
     test "< parsing" do
-      assert parse!("1 < 2") == [LessThan.new(Number.new(1), Number.new(2))]
+      assert parse!("1 < 2") == Block.new([LessThan.new(Number.new(1),
+                                                       Number.new(2))])
       assert parse!("1 + 1 < 2") ==
-        [LessThan.new(Add.new(Number.new(1), Number.new(1)),
-                      Number.new(2))]
+        Block.new([LessThan.new(Add.new(Number.new(1), Number.new(1)),
+                                Number.new(2))])
     end
 
     test "if parsing" do
       assert parse!("if (true) { 1 } else { 2 }") ==
-          [If.new(True.new, Number.new(1), Number.new(2))]
+          Block.new([If.new(True.new, Number.new(1), Number.new(2))])
     end
 
     test "assignment" do
-      assert parse!("let x = 10") == [Let.new(:x, Number.new(10))]
+      assert parse!("let x = 10") == Block.new([Let.new(:x, Number.new(10))])
     end
   end
 end

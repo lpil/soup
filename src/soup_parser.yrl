@@ -15,8 +15,8 @@ Rootsymbol expressions.
 Left 300 '+'.
 Right 100 '<'.
 
-expressions -> expression             : ['$1'].
-expressions -> expression expressions : ['$1'|'$2'].
+expressions -> expression             : mk_block(['$1']).
+expressions -> expression expressions : mk_block(['$1'|'$2']).
 
 expression -> literal                   : '$1'.
 expression -> expression '+' expression : mk_add('$1', '$3').
@@ -31,6 +31,9 @@ literal -> true   : mk_true('$1').
 literal -> false  : mk_false('$1').
 
 Erlang code.
+
+mk_block(Exprs) ->
+  'Elixir.Soup.AST.Block':new(Exprs).
 
 mk_number({number, _Line, Number}) ->
   'Elixir.Soup.AST.Number':new(Number).
