@@ -10,7 +10,7 @@ Rules.
 
 if      : {token, {'if',   TokenLine}}.
 let     : {token, {'let',  TokenLine}}.
-else    : {token, {'else', TokenLine}}.
+else    : {token, {else,   TokenLine}}.
 true    : {token, {true,   TokenLine}}.
 false   : {token, {false,  TokenLine}}.
 \=      : {token, {'=',    TokenLine}}.
