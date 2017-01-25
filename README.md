@@ -1,6 +1,6 @@
-# Simple.ex
+# Soup
 
-Simple.ex is a simple interpreted language, the runtime for which is written in
+Soup is a simple interpreted language, the runtime for which is written in
 Elixir.
 
 It's largely an adaption of the Simple language from the first few chapters of
@@ -15,8 +15,8 @@ Go grab a copy.
 # Compile the interpreter
 mix escript.build
 
-# Run some Simple code!
-./simple examples/addition.smp
+# Run some Souper code!
+./soup examples/addition.soup
 ```
 
 ### MPL2 Licence

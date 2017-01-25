@@ -1,9 +1,9 @@
-defmodule Simple.SourceTest do
+defmodule Soup.SourceTest do
   use ExUnit.Case, async: true
-  doctest Simple.Source
+  doctest Soup.Source
 
-  alias Simple.Source
-  alias Simple.AST.{Number, True, False, Add, LessThan, If, Let}
+  alias Soup.Source
+  alias Soup.AST.{Number, True, False, Add, LessThan, If, Let}
   import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do

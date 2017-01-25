@@ -1,9 +1,9 @@
-defmodule Simple do
+defmodule Soup do
   @moduledoc """
   A rather rubbish interpreted language.
   """
 
-  alias Simple.{Source, Machine}
+  alias Soup.{Source, Machine}
 
   @doc """
   Makes the magic happen.

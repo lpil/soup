@@ -20,3 +20,6 @@ erl_crash.dump
 src/simple_tokenizer.erl
 src/simple_parser.erl
 /simple
+src/soup_tokenizer.erl
+src/soup_parser.erl
+/soup

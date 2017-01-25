@@ -1,6 +1,6 @@
-defmodule Simple.Machine do
+defmodule Soup.Machine do
 
-  alias Simple.{Env, AST}
+  alias Soup.{Env, AST}
 
   @type t :: %__MODULE__{ast: AST.t, env: Env.t}
 
@@ -41,8 +41,8 @@ defmodule Simple.Machine do
   end
 end
 
-defimpl Inspect, for: Simple.Machine do
+defimpl Inspect, for: Soup.Machine do
   def inspect(_, _) do
-    "#Simple.Machine<AST, Env>"
+    "#Soup.Machine<AST, Env>"
   end
 end

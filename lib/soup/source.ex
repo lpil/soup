@@ -1,4 +1,4 @@
-defmodule Simple.Source do
+defmodule Soup.Source do
   @moduledoc """
   Source code parsing and tokenization.
   """
@@ -12,7 +12,7 @@ defmodule Simple.Source do
   def tokenize(source) when is_binary(source) do
       source
       |> String.to_charlist()
-      |> :simple_tokenizer.string()
+      |> :soup_tokenizer.string()
       |> case do
         {:ok, tokens, _} ->
           {:ok, tokens}
@@ -31,7 +31,7 @@ defmodule Simple.Source do
   """
   @spec tokenize(String.t) :: [token]
   def tokenize!(source) do
-    {:ok, source} = Simple.Source.tokenize(source)
+    {:ok, source} = Soup.Source.tokenize(source)
     source
   end
 
@@ -43,7 +43,7 @@ defmodule Simple.Source do
   def parse(source) when is_binary(source) do
     case tokenize(source) do
       {:ok, tokens} ->
-        :simple_parser.parse(tokens)
+        :soup_parser.parse(tokens)
 
       {:error, _, _} = error ->
         error
@@ -58,7 +58,7 @@ defmodule Simple.Source do
   TODO: Better error messages.
   """
   def parse!(source) do
-    {:ok, ast} = Simple.Source.parse(source)
+    {:ok, ast} = Soup.Source.parse(source)
     ast
   end
 end

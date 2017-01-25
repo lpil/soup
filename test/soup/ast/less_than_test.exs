@@ -1,13 +1,13 @@
-defmodule Simple.LessThanTest do
+defmodule Soup.LessThanTest do
   use ExUnit.Case
-  doctest Simple.AST.LessThan
+  doctest Soup.AST.LessThan
 
-  alias Simple.{Env, AST}
-  alias Simple.AST.{LessThan, True, False, Add, Number}
+  alias Soup.{Env, AST}
+  alias Soup.AST.{LessThan, True, False, Add, Number}
 
   @env Env.new()
 
-  describe "Simple.AST.reduce" do
+  describe "Soup.AST.reduce" do
     test "numbers can be less than" do
       expr = LessThan.new(Number.new(1), Number.new(2))
       assert {:ok, res, @env} = AST.reduce(expr, @env)
@@ -40,7 +40,7 @@ defmodule Simple.LessThanTest do
   end
 
 
-  describe "Simple.AST.to_source" do
+  describe "Soup.AST.to_source" do
     test "If printing" do
       expr = LessThan.new(Number.new(1), Number.new(2))
       assert AST.to_source(expr) == "1 < 2"

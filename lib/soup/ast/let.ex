@@ -1,4 +1,4 @@
-defmodule Simple.AST.Let do
+defmodule Soup.AST.Let do
   @moduledoc """
   Value assignment.
   """
@@ -12,8 +12,8 @@ defmodule Simple.AST.Let do
   @doc """
   Construct a Let node.
 
-      iex> Simple.AST.Let.new(:x, Simple.AST.Number.new(64))
-      %Simple.AST.Let{name: :x, value: Simple.AST.Number.new(64)}
+      iex> Soup.AST.Let.new(:x, Soup.AST.Number.new(64))
+      %Soup.AST.Let{name: :x, value: Soup.AST.Number.new(64)}
   """
   @spec new(atom, AST.t) :: t
   def new(name, value) when is_atom(name) and is_map(value) do
@@ -22,13 +22,13 @@ defmodule Simple.AST.Let do
 end
 
 
-defimpl Simple.AST.Protocol, for: Simple.AST.Let do
+defimpl Soup.AST.Protocol, for: Soup.AST.Let do
 
   def reduce(%{name: name, value: value}, env) do
-    alias Simple.AST
+    alias Soup.AST
     case AST.reduce(value, env) do
       :noop ->
-        new_env = Simple.Env.set(env, name, value)
+        new_env = Soup.Env.set(env, name, value)
         {:ok, value, new_env}
 
       {:ok, new_value, env} ->
@@ -38,7 +38,7 @@ defimpl Simple.AST.Protocol, for: Simple.AST.Let do
 
   def to_source(%{name: name, value: value}, _opts) do
     n = to_string(name)
-    v = Simple.AST.to_source(value)
+    v = Soup.AST.to_source(value)
     "let #{n} = #{v}"
   end
 end

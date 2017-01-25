@@ -1,9 +1,9 @@
-defmodule Simple.EnvTest do
+defmodule Soup.EnvTest do
   use ExUnit.Case, async: true
-  doctest Simple.Env
+  doctest Soup.Env
 
-  alias Simple.Env
-  alias Simple.AST.Number
+  alias Soup.Env
+  alias Soup.AST.Number
 
   describe "Env.set and Env.get" do
     test "setting and getting" do

@@ -1,9 +1,9 @@
-defmodule Simple.FalseTest do
+defmodule Soup.FalseTest do
   use ExUnit.Case
-  doctest Simple.AST.False
+  doctest Soup.AST.False
 
-  alias Simple.{Env, AST}
-  alias Simple.AST.False
+  alias Soup.{Env, AST}
+  alias Soup.AST.False
 
   @env Env.new()
 

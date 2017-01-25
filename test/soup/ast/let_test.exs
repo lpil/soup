@@ -1,9 +1,9 @@
-defmodule Simple.LetTest do
+defmodule Soup.LetTest do
   use ExUnit.Case
-  doctest Simple.AST.Let
+  doctest Soup.AST.Let
 
-  alias Simple.{Env, AST}
-  alias Simple.AST.{Let, Number, Add}
+  alias Soup.{Env, AST}
+  alias Soup.AST.{Let, Number, Add}
 
   @env Env.new()
 

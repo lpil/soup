@@ -1,4 +1,4 @@
-defmodule Simple.AST.Number do
+defmodule Soup.AST.Number do
   @moduledoc """
   A number.
   """
@@ -12,8 +12,8 @@ defmodule Simple.AST.Number do
   @doc """
   Construct a Number node.
 
-      iex> Simple.AST.Number.new(64)
-      %Simple.AST.Number{value: 64}
+      iex> Soup.AST.Number.new(64)
+      %Soup.AST.Number{value: 64}
   """
   @spec new(number) :: t
   def new(n) when is_number(n) do
@@ -21,7 +21,7 @@ defmodule Simple.AST.Number do
   end
 end
 
-defimpl Simple.AST.Protocol, for: Simple.AST.Number do
+defimpl Soup.AST.Protocol, for: Soup.AST.Number do
 
   def reduce(_, _) do
     :noop

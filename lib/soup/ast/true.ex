@@ -1,4 +1,4 @@
-defmodule Simple.AST.True do
+defmodule Soup.AST.True do
   defstruct []
 
   @type t :: %__MODULE__{}
@@ -6,8 +6,8 @@ defmodule Simple.AST.True do
   @doc """
   Construct a true boolean node.
 
-      iex> Simple.AST.True.new()
-      %Simple.AST.True{}
+      iex> Soup.AST.True.new()
+      %Soup.AST.True{}
   """
   @spec new() :: t
   def new do
@@ -15,7 +15,7 @@ defmodule Simple.AST.True do
   end
 end
 
-defimpl Simple.AST.Protocol, for: Simple.AST.True do
+defimpl Soup.AST.Protocol, for: Soup.AST.True do
 
   def reduce(_, _) do
     :noop

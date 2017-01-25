@@ -1,17 +1,17 @@
-defmodule Simple.CLI do
+defmodule Soup.CLI do
   @moduledoc """
-  Command line interface to Simple.ex
+  Command line interface to Soup.ex
   """
 
   def main([path]) do
     path
     |> File.read!
-    |> Simple.eval
+    |> Soup.eval
   end
 
   def main(_) do
     IO.puts """
-    USAGE: simple path/to/code.smp
+    USAGE: soup path/to/code.smp
     """
   end
 end

@@ -1,9 +1,9 @@
-defmodule Simple.AST.If do
+defmodule Soup.AST.If do
   keys = [:condition, :consequence, :alternative]
   @enforce_keys keys
   defstruct keys
 
-  alias Simple.AST
+  alias Soup.AST
 
   @type t :: %__MODULE__{condition: AST.t,
                          consequence: AST.t,
@@ -20,10 +20,10 @@ defmodule Simple.AST.If do
   end
 end
 
-defimpl Simple.AST.Protocol, for: Simple.AST.If do
+defimpl Soup.AST.Protocol, for: Soup.AST.If do
 
   def to_source(x, _opts) do
-    import Simple.AST, only: [to_source: 1]
+    import Soup.AST, only: [to_source: 1]
     """
     if (#{to_source x.condition}) {
       #{to_source x.consequence}
@@ -33,15 +33,15 @@ defimpl Simple.AST.Protocol, for: Simple.AST.If do
     """
   end
 
-  def reduce(%{condition: %Simple.AST.False{}} = x, env) do
+  def reduce(%{condition: %Soup.AST.False{}} = x, env) do
     {:ok, x.alternative, env}
   end
   def reduce(x, env) do
-    case Simple.AST.reduce(x.condition, env) do
+    case Soup.AST.reduce(x.condition, env) do
       :noop ->
         {:ok, x.consequence, env}
       {:ok, condition, new_env} ->
-        new_if = Simple.AST.If.new(condition, x.consequence, x.alternative)
+        new_if = Soup.AST.If.new(condition, x.consequence, x.alternative)
         {:ok, new_if, new_env}
     end
   end

@@ -1,9 +1,9 @@
-defmodule Simple.AST.Add do
+defmodule Soup.AST.Add do
   @moduledoc """
   Number addition.
   """
 
-  alias Simple.AST
+  alias Soup.AST
 
   keys = [:lhs, :rhs]
   @enforce_keys keys
@@ -14,8 +14,8 @@ defmodule Simple.AST.Add do
   @doc """
   Construct an Add node.
 
-  ...> Simple.Add.new(Simple.Number.new(1), Simple.Number.new(2))
-  %Simple.Add{lhs: Number.new(1), rhs: Number.new(2)}
+  ...> Soup.Add.new(Soup.Number.new(1), Soup.Number.new(2))
+  %Soup.Add{lhs: Number.new(1), rhs: Number.new(2)}
   """
   @spec new(struct, struct) :: t
   def new(lhs, rhs) when is_map(lhs) and is_map(rhs) do
@@ -23,16 +23,16 @@ defmodule Simple.AST.Add do
   end
 end
 
-defimpl Simple.AST.Protocol, for: Simple.AST.Add do
+defimpl Soup.AST.Protocol, for: Soup.AST.Add do
 
   def to_source(%{lhs: lhs, rhs: rhs}, _opts) do
-    import Simple.AST, only: [to_source: 1]
+    import Soup.AST, only: [to_source: 1]
     "#{to_source lhs} + #{to_source rhs}"
   end
 
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
-    alias Simple.AST
-    alias Simple.AST.{Add, Number}
+    alias Soup.AST
+    alias Soup.AST.{Add, Number}
     with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
          {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
       new_num = Number.new(lhs.value + rhs.value)

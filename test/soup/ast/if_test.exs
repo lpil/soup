@@ -1,9 +1,9 @@
-defmodule Simple.IfTest do
+defmodule Soup.IfTest do
   use ExUnit.Case
-  doctest Simple.AST.If
+  doctest Soup.AST.If
 
-  alias Simple.{Env, AST}
-  alias Simple.AST.{If, Add, True, False, Number}
+  alias Soup.{Env, AST}
+  alias Soup.AST.{If, Add, True, False, Number}
 
   @env Env.new()
 

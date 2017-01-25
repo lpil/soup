@@ -1,10 +1,10 @@
-defmodule Simple.AST.LessThan do
+defmodule Soup.AST.LessThan do
   keys = [:lhs, :rhs]
   @enforce_keys keys
   defstruct keys
 
-  alias Simple.AST
-  alias Simple.AST.True
+  alias Soup.AST
+  alias Soup.AST.True
 
   @type t :: %__MODULE__{lhs: AST.t,
                          rhs: AST.t}
@@ -18,16 +18,16 @@ defmodule Simple.AST.LessThan do
   end
 end
 
-defimpl Simple.AST.Protocol, for: Simple.AST.LessThan do
+defimpl Soup.AST.Protocol, for: Soup.AST.LessThan do
 
   def to_source(x, _opts) do
-    import Simple.AST, only: [to_source: 1]
+    import Soup.AST, only: [to_source: 1]
     "#{to_source x.lhs} < #{to_source x.rhs}"
   end
 
   def reduce(%{lhs: lhs, rhs: rhs}, env) do
-    alias Simple.AST
-    alias Simple.AST.{LessThan, True, False}
+    alias Soup.AST
+    alias Soup.AST.{LessThan, True, False}
     with {:lhs, :noop} <- {:lhs, AST.reduce(lhs, env)},
           {:rhs, :noop} <- {:rhs, AST.reduce(rhs, env)} do
       {:ok, compare(lhs, rhs), env}
@@ -38,7 +38,7 @@ defimpl Simple.AST.Protocol, for: Simple.AST.LessThan do
   end
 
   defp compare(lhs, rhs) do
-    alias Simple.AST.{True, False}
+    alias Soup.AST.{True, False}
     if lhs < rhs do
       True.new()
     else

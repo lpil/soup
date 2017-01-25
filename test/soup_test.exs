@@ -1,4 +1,4 @@
-defmodule SimpleTest do
+defmodule SoupTest do
   use ExUnit.Case
 
   test "the truth" do

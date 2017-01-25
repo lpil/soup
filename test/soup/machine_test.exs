@@ -1,9 +1,9 @@
-defmodule Simple.MachineTest do
+defmodule Soup.MachineTest do
   use ExUnit.Case, async: true
-  doctest Simple.Machine
+  doctest Soup.Machine
 
-  alias Simple.{Machine, Env}
-  alias Simple.AST.{Number, Add}
+  alias Soup.{Machine, Env}
+  alias Soup.AST.{Number, Add}
 
   describe "new/1" do
     test "machine construction" do

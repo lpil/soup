@@ -1,4 +1,4 @@
-defmodule Simple.Env do
+defmodule Soup.Env do
   @type scope :: %{optional(atom) => any}
   @type t :: %__MODULE__{scopes: [scope]}
 

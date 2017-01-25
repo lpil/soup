@@ -33,22 +33,22 @@ literal -> false  : mk_false('$1').
 Erlang code.
 
 mk_number({number, _Line, Number}) ->
-  'Elixir.Simple.AST.Number':new(Number).
+  'Elixir.Soup.AST.Number':new(Number).
 
 mk_true({true, _Line}) ->
-  'Elixir.Simple.AST.True':new().
+  'Elixir.Soup.AST.True':new().
 
 mk_false({false, _Line}) ->
-  'Elixir.Simple.AST.False':new().
+  'Elixir.Soup.AST.False':new().
 
 mk_add(X, Y) ->
-  'Elixir.Simple.AST.Add':new(X, Y).
+  'Elixir.Soup.AST.Add':new(X, Y).
 
 mk_less_than(X, Y) ->
-  'Elixir.Simple.AST.LessThan':new(X, Y).
+  'Elixir.Soup.AST.LessThan':new(X, Y).
 
 mk_if(Pred, X, Y) ->
-  'Elixir.Simple.AST.If':new(Pred, X, Y).
+  'Elixir.Soup.AST.If':new(Pred, X, Y).
 
 mk_let({atom, _, Name}, Value) ->
-  'Elixir.Simple.AST.Let':new(Name, Value).
+  'Elixir.Soup.AST.Let':new(Name, Value).
