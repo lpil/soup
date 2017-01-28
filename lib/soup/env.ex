@@ -16,7 +16,7 @@ defmodule Soup.Env do
   @doc """
   Set a value in the current scope.
   """
-  def set(%__MODULE__{} = env, name, value)
+  def put(%__MODULE__{} = env, name, value)
   when is_atom(name) and is_map(value) do
     [scope|scopes] = env.scopes
     new_scope = Map.put(scope, name, value)

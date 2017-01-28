@@ -28,7 +28,7 @@ defimpl Soup.AST.Protocol, for: Soup.AST.Let do
     alias Soup.AST
     case AST.reduce(value, env) do
       :noop ->
-        new_env = Soup.Env.set(env, name, value)
+        new_env = Soup.Env.put(env, name, value)
         {:ok, value, new_env}
 
       {:ok, new_value, env} ->
