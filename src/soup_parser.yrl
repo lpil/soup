@@ -1,6 +1,6 @@
 Nonterminals
 expressions expression literal
-arguments.
+fn_arguments call_arguments.
 
 Terminals
 '+' '-' '<'
@@ -21,26 +21,27 @@ Right 100 '<'.
 expressions -> expression             : mk_block('$1').
 expressions -> expression expressions : mk_block('$1', '$2').
 
-
-expression -> literal                   : '$1'.
-expression -> atom                      : mk_variable('$1').
-expression -> expression '-' expression : mk_subtract('$1', '$3').
-expression -> expression '+' expression : mk_add('$1', '$3').
-expression -> expression '<' expression : mk_less_than('$1', '$3').
-expression -> let atom '=' expression   : mk_let('$2', '$4').
+expression -> literal                     : '$1'.
+expression -> atom                        : mk_variable('$1').
+expression -> expression '-' expression   : mk_subtract('$1', '$3').
+expression -> expression '+' expression   : mk_add('$1', '$3').
+expression -> expression '<' expression   : mk_less_than('$1', '$3').
+expression -> let atom '=' expression     : mk_let('$2', '$4').
+expression -> atom '(' call_arguments ')' : mk_call('$1', '$3').
 
 % if (x) { 1 } else { 2 }
-expression -> if '(' expression ')'
-              '{' expressions '}'
-              else '{' expressions '}'   : mk_if('$3', '$6', '$10').
+expression -> if expression '{' expressions '}'
+                       else '{' expressions '}' : mk_if('$2', '$4', '$8').
 
 % |x, y| { x + y }
-expression -> '|' arguments '|' '{' expressions '}' : mk_function('$2', '$5').
+expression -> '|' fn_arguments '|'
+              '{' expressions '}' : mk_function('$2', '$5').
 
+call_arguments -> expression                    : mk_call_arguments('$1', []).
+call_arguments -> expression ',' call_arguments : mk_call_arguments('$1', '$3').
 
-arguments -> atom               : mk_arguments('$1', []).
-arguments -> atom ',' arguments : mk_arguments('$1', '$3').
-
+fn_arguments -> atom                  : mk_fn_arguments('$1', []).
+fn_arguments -> atom ',' fn_arguments : mk_fn_arguments('$1', '$3').
 
 literal -> number : mk_number('$1').
 literal -> true   : mk_true('$1').
@@ -48,13 +49,19 @@ literal -> false  : mk_false('$1').
 
 Erlang code.
 
+mk_call({atom, _, Name}, Arguments) ->
+  'Elixir.Soup.AST.Call':new(Name, Arguments).
+
 mk_variable({atom, _, Name}) ->
   'Elixir.Soup.AST.Variable':new(Name).
 
 mk_function(Arguments, Body) ->
   'Elixir.Soup.AST.Function':new(Arguments, Body).
 
-mk_arguments({atom, _, Name}, Rest) ->
+mk_call_arguments(First, Rest) ->
+  [First|Rest].
+
+mk_fn_arguments({atom, _, Name}, Rest) ->
   [Name|Rest].
 
 mk_block(Expr) ->

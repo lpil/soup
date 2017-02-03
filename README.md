@@ -9,11 +9,11 @@ It looks like this:
 let x = 1
 let y = 2
 
-let add_if_big = if (x > y) {
+let add = |x, y| {
     x + y
-} else {
-    x
 }
+
+let z = add(x, y)
 ```
 
 

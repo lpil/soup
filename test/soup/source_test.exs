@@ -4,7 +4,7 @@ defmodule Soup.SourceTest do
 
   alias Soup.Source
   alias Soup.AST.{Block, Number, True, False, Add, Subtract, LessThan, If,
-                  Let, Variable, Function}
+                  Let, Variable, Function, Call}
   import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do
@@ -120,7 +120,7 @@ defmodule Soup.SourceTest do
     end
 
     test "if parsing" do
-      assert parse!("if (true) { 1 } else { 2 }") ==
+      assert parse!("if true { 1 } else { 2 }") ==
           Block.new([If.new(True.new,
                             Block.new([Number.new(1)]),
                             Block.new([Number.new(2)]))])
@@ -152,6 +152,11 @@ defmodule Soup.SourceTest do
         Block.new([Function.new([:a, :b],
                                 Block.new([Add.new(Variable.new(:a),
                                                    Variable.new(:b))]))])
+    end
+
+    test "call parsing" do
+      assert parse!("print(1)") ==
+        Block.new([Call.new(:print, [Number.new(1)])])
     end
   end
 end

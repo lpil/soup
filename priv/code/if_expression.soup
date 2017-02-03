@@ -1,4 +1,4 @@
-let z = if (1 < 2) {
+let z = if 1 < 2 {
     100
 } else {
     200

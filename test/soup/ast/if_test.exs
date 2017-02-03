@@ -38,7 +38,7 @@ defmodule Soup.IfTest do
     test "If printing" do
       num = If.new(True.new(), Number.new(1), Number.new(2))
       assert AST.to_source(num) == """
-      if (true) {
+      if true {
           1
       } else {
           2
