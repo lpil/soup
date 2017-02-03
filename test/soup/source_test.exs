@@ -3,7 +3,8 @@ defmodule Soup.SourceTest do
   doctest Soup.Source
 
   alias Soup.Source
-  alias Soup.AST.{Block, Number, True, False, Add, LessThan, If, Let}
+  alias Soup.AST.{Block, Number, True, False, Add, LessThan, If, Let, Variable,
+                  Function}
   import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do
@@ -54,6 +55,14 @@ defmodule Soup.SourceTest do
 
     test "= tokenization" do
       assert [{:=, _}] = tokenize!("=")
+    end
+
+    test "| tokenization" do
+      assert [{:|, _}] = tokenize!("|")
+    end
+
+    test ", tokenization" do
+      assert [{:",", _}] = tokenize!(",")
     end
 
     test "if else tokenization" do
@@ -112,7 +121,9 @@ defmodule Soup.SourceTest do
 
     test "if parsing" do
       assert parse!("if (true) { 1 } else { 2 }") ==
-          Block.new([If.new(True.new, Number.new(1), Number.new(2))])
+          Block.new([If.new(True.new,
+                            Block.new([Number.new(1)]),
+                            Block.new([Number.new(2)]))])
     end
 
     test "assignment" do
@@ -127,6 +138,20 @@ defmodule Soup.SourceTest do
       """) == Block.new([Let.new(:a, Number.new(10)),
                          Let.new(:b, Number.new(20)),
                          Let.new(:c, Number.new(30))])
+    end
+
+    test "function parsing" do
+      assert parse!("|a| { a }") ==
+        Block.new([Function.new([:a],
+                                Block.new([Variable.new(:a)]))])
+      assert parse!("""
+      |a, b| {
+          a + b
+      }
+      """) ==
+        Block.new([Function.new([:a, :b],
+                                Block.new([Add.new(Variable.new(:a),
+                                                   Variable.new(:b))]))])
     end
   end
 end

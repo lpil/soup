@@ -26,9 +26,9 @@ defimpl Soup.AST.Protocol, for: Soup.AST.If do
     import Soup.AST, only: [to_source: 1]
     """
     if (#{to_source x.condition}) {
-      #{to_source x.consequence}
+        #{to_source x.consequence}
     } else {
-      #{to_source x.alternative}
+        #{to_source x.alternative}
     }
     """
   end

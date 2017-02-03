@@ -1,9 +1,11 @@
 Nonterminals
-expressions expression literal.
+expressions expression literal
+arguments.
 
 Terminals
 '+' '<'
 '{' '}' '(' ')'
+'|' ','
 number
 true false
 atom
@@ -18,19 +20,40 @@ Right 100 '<'.
 expressions -> expression             : mk_block('$1').
 expressions -> expression expressions : mk_block('$1', '$2').
 
+
 expression -> literal                   : '$1'.
+expression -> atom                      : mk_variable('$1').
 expression -> expression '+' expression : mk_add('$1', '$3').
 expression -> expression '<' expression : mk_less_than('$1', '$3').
 expression -> let atom '=' expression   : mk_let('$2', '$4').
+
+% if (x) { 1 } else { 2 }
 expression -> if '(' expression ')'
-              '{' expression '}'
-              else '{' expression '}'   : mk_if('$3', '$6', '$10').
+              '{' expressions '}'
+              else '{' expressions '}'   : mk_if('$3', '$6', '$10').
+
+% |x, y| { x + y }
+expression -> '|' arguments '|' '{' expressions '}' : mk_function('$2', '$5').
+
+
+arguments -> atom               : mk_arguments('$1', []).
+arguments -> atom ',' arguments : mk_arguments('$1', '$3').
+
 
 literal -> number : mk_number('$1').
 literal -> true   : mk_true('$1').
 literal -> false  : mk_false('$1').
 
 Erlang code.
+
+mk_variable({atom, _, Name}) ->
+  'Elixir.Soup.AST.Variable':new(Name).
+
+mk_function(Arguments, Body) ->
+  'Elixir.Soup.AST.Function':new(Arguments, Body).
+
+mk_arguments({atom, _, Name}, Rest) ->
+  [Name|Rest].
 
 mk_block(Expr) ->
   'Elixir.Soup.AST.Block':new([Expr]).

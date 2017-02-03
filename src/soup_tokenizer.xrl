@@ -17,6 +17,8 @@ false   : {token, {false,  TokenLine}}.
 \+      : {token, {'+',    TokenLine}}.
 \-      : {token, {'-',    TokenLine}}.
 \<      : {token, {'<',    TokenLine}}.
+\|      : {token, {'|',    TokenLine}}.
+\,      : {token, {',',    TokenLine}}.
 \(      : {token, {'(',    TokenLine}}.
 \)      : {token, {')',    TokenLine}}.
 \{      : {token, {'{',    TokenLine}}.

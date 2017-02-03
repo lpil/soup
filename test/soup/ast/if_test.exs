@@ -39,9 +39,9 @@ defmodule Soup.IfTest do
       num = If.new(True.new(), Number.new(1), Number.new(2))
       assert AST.to_source(num) == """
       if (true) {
-        1
+          1
       } else {
-        2
+          2
       }
       """
     end

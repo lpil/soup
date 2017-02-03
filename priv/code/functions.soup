@@ -1,0 +1,18 @@
+1
+// let identity = |a| {
+//     a
+// }
+
+// let double = |a| {
+//     a + a
+// }
+
+// let negate = |a| {
+//     0 - a
+// }
+
+// let call_twice = |function, a| {
+//     function(function(a))
+// }
+
+// // vim: set ft=rust:
