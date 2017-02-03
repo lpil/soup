@@ -3,7 +3,7 @@ expressions expression literal
 arguments.
 
 Terminals
-'+' '<'
+'+' '-' '<'
 '{' '}' '(' ')'
 '|' ','
 number
@@ -15,6 +15,7 @@ if else.
 Rootsymbol expressions.
 
 Left 300 '+'.
+Left 300 '-'.
 Right 100 '<'.
 
 expressions -> expression             : mk_block('$1').
@@ -23,6 +24,7 @@ expressions -> expression expressions : mk_block('$1', '$2').
 
 expression -> literal                   : '$1'.
 expression -> atom                      : mk_variable('$1').
+expression -> expression '-' expression : mk_subtract('$1', '$3').
 expression -> expression '+' expression : mk_add('$1', '$3').
 expression -> expression '<' expression : mk_less_than('$1', '$3').
 expression -> let atom '=' expression   : mk_let('$2', '$4').
@@ -73,6 +75,9 @@ mk_false({false, _Line}) ->
 
 mk_add(X, Y) ->
   'Elixir.Soup.AST.Add':new(X, Y).
+
+mk_subtract(X, Y) ->
+  'Elixir.Soup.AST.Subtract':new(X, Y).
 
 mk_less_than(X, Y) ->
   'Elixir.Soup.AST.LessThan':new(X, Y).

@@ -3,14 +3,16 @@
 Soup is a simple interpreted language, the runtime for which is written in
 Elixir.
 
+It looks like this:
+
 ```rust
 let x = 1
 let y = 2
 
-let z = if (x > y) {
-  true
+let add_if_big = if (x > y) {
+    x + y
 } else {
-  false
+    x
 }
 ```
 
