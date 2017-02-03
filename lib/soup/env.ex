@@ -34,4 +34,20 @@ defmodule Soup.Env do
       {:ok, _} = x -> x
     end
   end
+
+
+  @doc """
+  Push a fresh scope onto the stack
+  """
+  def push_scope(%__MODULE__{} = env) do
+    %{env | scopes: [%{}|env.scopes]}
+  end
+
+
+  @doc """
+  Pop the current scope off the stack
+  """
+  def pop_scope(%__MODULE__{} = env) do
+    %{env | scopes: tl(env.scopes)}
+  end
 end

@@ -31,16 +31,34 @@ defimpl Soup.AST.Protocol, for: Soup.AST.Call do
 
   def reduce(call, env) do
     with :noop <- reduce_arguments(call.arguments, env),
-         {:ok, function} <- Env.get(env, call.function)
+         {:ok, function} <- Env.get(env, call.function),
+         {:ok, new_env} <- env
+            |> Env.push_scope()
+            |> Env.put(call.function, function)
+            |> prep_scope(function.arguments, call.arguments)
     do
-      :ok
+      {:ok, function.body, new_env}
     else
       :not_set ->
         throw {:undefined_function, call.function}
 
+      :invalid_arity ->
+        throw {:invalid_arity, call.function}
+
       {:arg_reduced, new_args, new_env} ->
         {:ok, %{call | arguments: new_args}, new_env}
+
     end
+  end
+
+  defp prep_scope(env, [name|ns], [value|vs]) do
+    env |> Env.put(name, value) |> prep_scope(ns, vs)
+  end
+  defp prep_scope(env, [], []) do
+    {:ok, env}
+  end
+  defp prep_scope(_, _, _) do
+    :invalid_arity
   end
 
   defp reduce_arguments(args, env) when is_list(args) do
