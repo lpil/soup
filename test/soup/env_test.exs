@@ -14,14 +14,14 @@ defmodule Soup.EnvTest do
     end
   end
 
-  describe "push_scope/1 and pop_scope/1" do
+  describe "push_stack/1 and pop_stack/1" do
     test "grows and shrinks the stack with clean scopes" do
       env =
         Env.new
         |> Env.put(:x, Number.new(4))
-        |> Env.push_scope()
+        |> Env.push_stack()
       assert :not_set == Env.get(env, :x)
-      new_env = Env.pop_scope(env)
+      new_env = Env.pop_stack(env)
       assert {:ok, Number.new(4)} == Env.get(new_env, :x)
     end
   end

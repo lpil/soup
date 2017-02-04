@@ -3,7 +3,7 @@ defmodule Soup.CallTest do
   doctest Soup.AST.Call
 
   alias Soup.{Env, AST}
-  alias Soup.AST.{Call, Add, Number, Function, Variable}
+  alias Soup.AST.{Call, Return, Add, Number, Function, Variable}
 
   @env Env.new
 
@@ -37,8 +37,7 @@ defmodule Soup.CallTest do
       call = Call.new(:identity, [Number.new(1)])
       assert {:ok, expanded, new_env} = AST.reduce(call, env)
       # The AST is that of the function body, wrapped in a Return
-      # assert expanded == Return.new(Variable.new(:x)) # TODO
-      IO.inspect assert expanded == Variable.new(:x)
+      assert expanded == Return.new(Variable.new(:x)) # TODO
       # A new scope is created with function and args set
       assert Env.get(new_env, :y) == :not_set
       assert Env.get(new_env, :x) == {:ok, Number.new(1)}

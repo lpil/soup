@@ -2,7 +2,7 @@ defmodule Soup.Machine do
 
   alias Soup.{Env, AST}
 
-  @type t :: %__MODULE__{ast: AST.t, env: Env.t}
+  @opaque t :: %__MODULE__{ast: AST.t, env: Env.t}
 
   @enforce_keys [:ast]
   defstruct ast: nil,

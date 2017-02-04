@@ -33,11 +33,11 @@ defimpl Soup.AST.Protocol, for: Soup.AST.Call do
     with :noop <- reduce_arguments(call.arguments, env),
          {:ok, function} <- Env.get(env, call.function),
          {:ok, new_env} <- env
-            |> Env.push_scope()
+            |> Env.push_stack()
             |> Env.put(call.function, function)
             |> prep_scope(function.arguments, call.arguments)
     do
-      {:ok, function.body, new_env}
+      {:ok, AST.Return.new(function.body), new_env}
     else
       :not_set ->
         throw {:undefined_function, call.function}
