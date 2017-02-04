@@ -5,8 +5,9 @@ defmodule Soup.CLI do
 
   def main([path]) do
     path
-    |> File.read!
-    |> Soup.eval
+    |> File.read!()
+    |> Soup.eval()
+    |> IO.inspect()
   end
 
   def main(_) do

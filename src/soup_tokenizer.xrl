@@ -13,6 +13,7 @@ let     : {token, {'let',  TokenLine}}.
 else    : {token, {else,   TokenLine}}.
 true    : {token, {true,   TokenLine}}.
 false   : {token, {false,  TokenLine}}.
+\==     : {token, {'==',   TokenLine}}.
 \=      : {token, {'=',    TokenLine}}.
 \+      : {token, {'+',    TokenLine}}.
 \-      : {token, {'-',    TokenLine}}.

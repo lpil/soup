@@ -3,7 +3,7 @@ expressions expression literal
 fn_arguments call_arguments.
 
 Terminals
-'+' '-' '<'
+'+' '-' '<' '=='
 '{' '}' '(' ')'
 '|' ','
 number
@@ -17,12 +17,14 @@ Rootsymbol expressions.
 Left 300 '+'.
 Left 300 '-'.
 Right 100 '<'.
+Nonassoc 200 '=='.
 
 expressions -> expression             : mk_block('$1').
 expressions -> expression expressions : mk_block('$1', '$2').
 
 expression -> literal                     : '$1'.
 expression -> atom                        : mk_variable('$1').
+expression -> expression '==' expression  : mk_eq('$1', '$3').
 expression -> expression '-' expression   : mk_subtract('$1', '$3').
 expression -> expression '+' expression   : mk_add('$1', '$3').
 expression -> expression '<' expression   : mk_less_than('$1', '$3').
@@ -79,6 +81,9 @@ mk_true({true, _Line}) ->
 
 mk_false({false, _Line}) ->
   'Elixir.Soup.AST.False':new().
+
+mk_eq(X, Y) ->
+  'Elixir.Soup.AST.Eq':new(X, Y).
 
 mk_add(X, Y) ->
   'Elixir.Soup.AST.Add':new(X, Y).

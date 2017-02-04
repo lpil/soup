@@ -4,7 +4,7 @@ defmodule Soup.SourceTest do
 
   alias Soup.Source
   alias Soup.AST.{Block, Number, True, False, Add, Subtract, LessThan, If,
-                  Let, Variable, Function, Call}
+                  Let, Variable, Function, Call, Eq}
   import Source, only: [tokenize!: 1, parse!: 1]
 
   describe "tokenize/1" do
@@ -51,6 +51,10 @@ defmodule Soup.SourceTest do
 
     test "< tokenization" do
       assert [{:<, _}] = tokenize!("<")
+    end
+
+    test "== tokenization" do
+      assert [{:==, _}] = tokenize!("==")
     end
 
     test "= tokenization" do
@@ -109,6 +113,11 @@ defmodule Soup.SourceTest do
     test "- parsing" do
       assert parse!("8 - 3") == Block.new([Subtract.new(Number.new(8),
                                                         Number.new(3))])
+    end
+
+    test "== parsing" do
+      assert parse!("1 == 2") == Block.new([Eq.new(Number.new(1),
+                                                   Number.new(2))])
     end
 
     test "< parsing" do
