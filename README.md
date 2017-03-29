@@ -27,7 +27,7 @@ Go grab a copy.
 
 ```sh
 # Compile the interpreter
-mix escript.build
+MIX_ENV=prod mix escript.build
 
 # Run some Souper code!
 ./soup priv/code/addition.soup
